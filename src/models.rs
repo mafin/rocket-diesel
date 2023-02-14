@@ -1,12 +1,14 @@
-use diesel::prelude::*;
+use rocket::serde::{Serialize, Deserialize};
 use diesel::{Insertable, Queryable};
 
+use crate::schema::blog_posts;
+
 #[derive(Serialize, Deserialize, Queryable, Debug, Insertable)]
-// #[table_name = "blog_posts"]
-#[diesel(table_name = blog_posts)]
-struct BlogPost {
-    id: i32,
-    title: String,
-    body: String,
-    published: bool,
+#[serde(crate = "rocket::serde")]
+#[table_name = "blog_posts"]
+pub struct BlogPost {
+    pub id: i32,
+    pub title: String,
+    pub body: String,
+    pub published: bool,
 }
