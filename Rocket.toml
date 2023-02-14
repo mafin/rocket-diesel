@@ -1,3 +1,6 @@
 [default]
 name = "Jeff"
 age = 40
+
+[default.databases.my_db]
+url = "postgresql://devel:devel@localhost:5432/rocket-diesel"

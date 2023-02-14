@@ -4,19 +4,27 @@
 use rocket::serde::json::Json;
 use rocket::State;
 use rocket::fairing::AdHoc;
+// use self::schema::*;
+// use diesel::{Insertable, Queryable};
+use self::models::*;
+
+// #[derive(Serialize, Deserialize, Queryable, Debug, Insertable)]
+// // #[table_name = "blog_posts"]
+// #[diesel(table_name = blog_posts)]
+// struct BlogPost {
+//     id: i32,
+//     title: String,
+//     body: String,
+//     published: bool,
+// }
+
+#[database("my_db")]
+pub struct Db(diesel::PgConnection);
 
 #[derive(Deserialize)]
 struct Config {
     name: String,
     age: u8,
-}
-
-#[derive(Serialize, Deserialize)]
-struct BlogPost {
-    id: i32,
-    title: String,
-    body: String,
-    published: bool,
 }
 
 #[get("/")]
@@ -94,7 +102,8 @@ fn rocket() -> _ {
                routes![
                    get_random_blog_post,
                    get_blog_post,
-                   get_all_blog_posts
+                   get_all_blog_posts,
+                   create_blog_post,
                ],
         )
 }
